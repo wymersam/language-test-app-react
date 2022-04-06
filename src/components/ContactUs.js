@@ -108,6 +108,17 @@ export default function ContactUs(level) {
                     />
                   </div>
 
+                  <div className="form-section visually-hidden">
+                    <label>Level: </label>
+                    <input
+                      type="text"
+                      name="level"
+                      id="level"
+                      value={grade}
+                      readOnly
+                    />
+                  </div>
+
                   <button
                     className="submit-btn"
                     type="submit"
