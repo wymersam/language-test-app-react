@@ -9,8 +9,7 @@ export default function ContactUs(level) {
   const [email, setEmail] = useState("");
   const [formClass, setFormClass] = useState("");
   const [textClass, setTextClass] = useState("hide-text");
-  const [formErrorTextClass, setFormErrorTextClass] =
-    useState("form-error-text");
+  const [formErrorTextClass, setFormErrorTextClass] = useState("");
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -38,6 +37,7 @@ export default function ContactUs(level) {
 
   function formError(e) {
     e.preventDefault();
+    setFormErrorTextClass("form-error-text");
     setName("Please add name");
     setEmail("Please add email");
     setTimeout(() => {
