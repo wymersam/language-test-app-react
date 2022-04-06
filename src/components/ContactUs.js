@@ -52,7 +52,6 @@ export default function ContactUs(level) {
       {({ course, media }) => {
         return (
           <>
-            {console.log(course, media)}
             <div className="contact-page">
               <form
                 ref={form}
