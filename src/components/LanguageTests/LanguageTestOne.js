@@ -36,7 +36,7 @@ export default function LanguageTestOne() {
           <h3 className="language-test-question">
             Where can you see this notice?
           </h3>
-          <img className="test-image" src={image} alt="test" />
+          <img className="test-image" src={image} alt="test" quality="100" />
           <div className="answer-section" key={questionNumber}>
             {answerOptions.map((answerOption, index) => (
               <button
