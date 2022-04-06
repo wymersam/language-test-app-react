@@ -112,9 +112,7 @@ textarea {
 }
 
 /* PRETEST QUESTION PAGE */
-.pre-test-container {
-  margin: 0 50px;
-}
+
 .pretest-question-text-german,
 .pretest-question-text-english,
 .language-test-question {
@@ -125,9 +123,6 @@ textarea {
   .pretest-question-text-english,
   .pretest-question-text-german {
     margin: 10px 0;
-  }
-  .pre-test-container {
-    margin: 0 10px;
   }
 }
 /*  */

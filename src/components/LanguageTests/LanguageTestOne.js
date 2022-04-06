@@ -32,7 +32,7 @@ export default function LanguageTestOne() {
       {testComplete ? (
         <LanguageTestTwo scoreOne={score} />
       ) : (
-        <section className="pre-test-container">
+        <section className="">
           <h3 className="language-test-question">
             Where can you see this notice?
           </h3>
