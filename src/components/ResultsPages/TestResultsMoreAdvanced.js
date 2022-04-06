@@ -2,7 +2,6 @@ import React from "react";
 import ContactUs from "../ContactUs";
 
 export default function TestResultsAdvancedTwo(newScore) {
-  console.log(newScore.finalScore);
   let currentScore = newScore.finalScore;
 
   function getLevelFromScore(currentScore) {
