@@ -26,6 +26,10 @@ textarea {
   text-align: center;
 }
 
+a {
+  color: black;
+}
+
 .app-title-h1 {
   text-align: center;
 }
