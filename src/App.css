@@ -56,12 +56,13 @@ textarea {
   font-size: 1rem;
   margin-top: 0.7em;
 }
+.next-btn:hover {
+  cursor: pointer;
+}
 .finish-btn {
   background-color: #cbf2f4;
 }
-.finish-btn:hover,
-.next-btn:hover {
-  background-color: coral;
+.finish-btn:hover {
   cursor: pointer;
 }
 .advance-btn,
@@ -92,11 +93,13 @@ textarea {
   cursor: pointer;
 }
 
-/* @media only screen and (min-width: 830px) {
-  .answer-btn:hover {
+@media only screen and (min-width: 830px) {
+  .answer-btn:hover,
+  .finish-btn:hover,
+  .next-btn:hover {
     background-color: coral;
   }
-} */
+}
 
 .test-btn:hover {
   background-color: coral;
