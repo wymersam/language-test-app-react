@@ -92,7 +92,13 @@ textarea {
   cursor: pointer;
 }
 
-.answer-btn:hover {
+/* @media only screen and (min-width: 830px) {
+  .answer-btn:hover {
+    background-color: coral;
+  }
+} */
+
+.test-btn:hover {
   background-color: coral;
 }
 

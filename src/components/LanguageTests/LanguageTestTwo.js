@@ -61,7 +61,7 @@ export default function LanguageTestTwo(scoreOne) {
               <button
                 key={index}
                 onClick={() => handleAnswerClickTest(answerOption.isCorrect)}
-                className="answer-btn"
+                className="answer-btn test-btn"
               >
                 {answerOption.answerText}
               </button>
