@@ -8,12 +8,15 @@ export default function LanguageTestOne() {
     languageTestQuestionsOne[indexLanguageTest];
   const [score, setScore] = useState(0);
   const [testComplete, setTestComplete] = useState(false);
+  // const [incorrectAnswers, setIncorrectAnswers] = useState([]);
 
   function handleAnswerClickTest(isCorrect) {
+    console.log(isCorrect);
     if (isCorrect) {
       setScore(score + 1);
       nextQuestionTest();
     } else {
+      // storeIncorrectAnswer();
       nextQuestionTest();
     }
   }
@@ -26,6 +29,14 @@ export default function LanguageTestOne() {
       setTestComplete(true);
     }
   }
+
+  // function storeIncorrectAnswer() {
+  //   let answers = languageTestQuestionsOne[indexLanguageTest].answerOptions;
+  //   let questionId = languageTestQuestionsOne[indexLanguageTest].id;
+  //   answers = answers.map((answer) => answer.answerText);
+  //   let test = { answers: answers, id: questionId };
+  //   setIncorrectAnswers({ ...test, incorrectAnswers });
+  // }
 
   return (
     <>
