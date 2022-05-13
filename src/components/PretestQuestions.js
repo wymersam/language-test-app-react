@@ -72,7 +72,7 @@ export default function PretestQuestions() {
             <section className="pretest-answer-section">
               {answerOptions.map((answerOption, index) => (
                 <button
-                  id="answer-btn"
+                  id={index}
                   className={style}
                   key={index}
                   onClick={(e) =>
