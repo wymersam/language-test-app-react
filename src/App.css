@@ -94,16 +94,12 @@ a {
   margin-top: 0.3em;
   cursor: pointer;
 }
-.answer-btn:hover,
-.finish-btn:hover,
-.next-btn:hover {
-  background-color: none;
-}
 
 @media only screen and (min-width: 830px) {
   .answer-btn:hover,
   .finish-btn:hover,
-  .next-btn:hover {
+  .next-btn:hover,
+  .test-btn:hover {
     background-color: coral;
   }
 }
