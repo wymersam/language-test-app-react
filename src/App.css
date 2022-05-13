@@ -94,6 +94,11 @@ a {
   margin-top: 0.3em;
   cursor: pointer;
 }
+.answer-btn:hover,
+.finish-btn:hover,
+.next-btn:hover {
+  background-color: none;
+}
 
 @media only screen and (min-width: 830px) {
   .answer-btn:hover,
@@ -101,10 +106,6 @@ a {
   .next-btn:hover {
     background-color: coral;
   }
-}
-
-.test-btn:hover {
-  background-color: coral;
 }
 
 .pretest-answer-btn-clicked {
