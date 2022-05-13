@@ -62,7 +62,9 @@ export default function ContactUs(level) {
                   To complete the test, please submit your name and email.
                 </h3>
 
-                <label className="form-label-name">Name: </label>
+                <label for="name" className="form-label-name">
+                  Name:{" "}
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -72,8 +74,10 @@ export default function ContactUs(level) {
                   onChange={(e) => setName(e.target.value)}
                 />
 
-                <label className="form-label-email">Email: </label>
-                <article className="form-section ">
+                <label for="email" className="form-label-email">
+                  Email:{" "}
+                </label>
+                <article>
                   <input
                     type="email"
                     name="email"
@@ -83,8 +87,10 @@ export default function ContactUs(level) {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </article>
-                <article className="form-section visually-hidden">
-                  <label>Course Recommendations: </label>
+                <article className="visually-hidden">
+                  <label for="course-recommendations">
+                    Course Recommendations:{" "}
+                  </label>
                   <input
                     type="text"
                     name="courses"
@@ -94,8 +100,8 @@ export default function ContactUs(level) {
                   />
                 </article>
 
-                <article className="form-section visually-hidden">
-                  <label>Media: </label>
+                <article className="visually-hidden">
+                  <label for="media">Media: </label>
                   <input
                     type="text"
                     name="media"
@@ -105,8 +111,8 @@ export default function ContactUs(level) {
                   />
                 </article>
 
-                <article className="form-section visually-hidden">
-                  <label>Level: </label>
+                <article className="visually-hidden">
+                  <label for="level">Level: </label>
                   <input
                     type="text"
                     name="level"
