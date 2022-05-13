@@ -59,6 +59,7 @@ export default function LanguageTestThree(scoreTwo) {
           <div className="answer-section" key={questionNumber}>
             {answerOptions.map((answerOption, index) => (
               <button
+                id={index}
                 key={index}
                 onClick={() => handleAnswerClickTest(answerOption.isCorrect)}
                 className="answer-btn test-btn"
