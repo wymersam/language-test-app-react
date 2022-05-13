@@ -37,9 +37,7 @@ a {
 .visually-hidden {
   display: none;
 }
-.hide-text {
-  display: none;
-}
+
 .show-text {
   display: block;
 }
@@ -126,13 +124,7 @@ a {
 
 /* PRETEST QUESTION PAGE */
 
-.pretest-question-text-german,
-.pretest-question-text-english,
-.language-test-question {
-  font-size: 1.3rem;
-  margin: 20px;
-}
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 375px) {
   .pretest-question-text-english,
   .pretest-question-text-german {
     margin: 10px 0;
@@ -140,13 +132,12 @@ a {
 }
 /*  */
 
-.language-test-container,
-.test-results-container {
+.language-test-container {
   max-width: 60%;
   margin: 0 auto;
   margin-top: 10px;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 200px) and (max-width: 750px) {
   .language-test-container {
     max-width: 90%;
   }
@@ -174,15 +165,17 @@ a {
 
 /* TEST RESULTS PAGE */
 .test-results-container {
+  margin: 0 auto;
+  margin-top: 10px;
   border: 2px solid black;
   padding: 10px 20px;
   border-radius: 4px;
   background-color: rgb(217, 243, 252);
+  max-width: 60%;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 200px) and (max-width: 750px) {
   .test-results-container {
-    max-width: 80%;
-    margin-top: 20px;
+    max-width: 90%;
   }
 }
 
@@ -204,6 +197,10 @@ a {
 
 .contact-page-thanks-text {
   font-size: 1.3rem;
+}
+.form-label-name,
+.form-label-email {
+  display: block;
 }
 
 .form-error-text {

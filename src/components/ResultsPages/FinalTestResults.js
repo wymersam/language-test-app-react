@@ -6,33 +6,29 @@ export default function FinalTestResults(newScore) {
 
   return (
     <>
-      <div className="test-results-container">
+      <section className="test-results-container">
         {currentScore >= 45 && currentScore <= 53 ? (
-          <section>
+          <article>
             <h2>Congratulations! You achieved level C1</h2>
             <ContactUs level={"C1"} />
-          </section>
+          </article>
         ) : currentScore >= 54 ? (
-          <div className="test-results-page">
-            <section>
-              <h2>Congratulations! You achieved level C2</h2>
-              <ContactUs level={"C2"} />
-            </section>
-          </div>
+          <article className="test-results-page">
+            <h2>Congratulations! You achieved level C2</h2>
+            <ContactUs level={"C2"} />
+          </article>
         ) : currentScore <= 44 ? (
-          <div className="test-results-page">
-            <section>
-              <h2>Congratulations! You achieved level B2</h2>
-              <ContactUs level={"B2"} />
-            </section>
-          </div>
+          <article className="test-results-page">
+            <h2>Congratulations! You achieved level B2</h2>
+            <ContactUs level={"B2"} />
+          </article>
         ) : (
-          <section>
+          <article className="test-results-page">
             <h2>Congratulations! You achieved level B1</h2>
             <ContactUs level={"B1"} />
-          </section>
+          </article>
         )}
-      </div>
+      </section>
     </>
   );
 }

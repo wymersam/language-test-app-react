@@ -21,7 +21,7 @@ export default function TestResultsAdvancedTwo(newScore) {
           Congratulations! You achieved level {getLevelFromScore(currentScore)}
         </h2>
         <h2>Here are some course recommendations based on your level:</h2>
-        <div className="link-wrapper">
+        <article className="link-wrapper">
           <a
             href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=67&katvaterid=64&katname=${getLevelFromScore(
               currentScore
@@ -31,7 +31,7 @@ export default function TestResultsAdvancedTwo(newScore) {
           >
             {getLevelFromScore(currentScore)} course recommendations
           </a>
-        </div>
+        </article>
         <ContactUs />
       </section>
     </>

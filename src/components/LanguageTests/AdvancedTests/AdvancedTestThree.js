@@ -32,14 +32,14 @@ export default function AdvancedTestThree(newScore) {
         <FinalTestResults finalScore={score} />
       ) : (
         <section className="language-test-container">
-          <section className="sub-question-container">
+          <article className="sub-question-container">
             <h2>
               In this section you must choose the word which best fits each
               space in the text below.
             </h2>
-          </section>
-          <h3 className="language-test-question">{question}</h3>
-          <div className="answer-section" key={questionNumber}>
+          </article>
+          <article className="answer-section" key={questionNumber}>
+            <h3 className="language-test-question">{question}</h3>
             {answerOptions.map((answerOption, index) => (
               <button
                 id={index}
@@ -51,7 +51,7 @@ export default function AdvancedTestThree(newScore) {
               </button>
             ))}
             <p>Question {questionNumber}/20</p>
-          </div>
+          </article>
         </section>
       )}
     </>

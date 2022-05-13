@@ -43,12 +43,12 @@ export default function LanguageTestOne() {
       {testComplete ? (
         <LanguageTestTwo scoreOne={score} />
       ) : (
-        <section className="">
+        <>
           <h3 className="language-test-question">
             Where can you see this notice?
           </h3>
           <img className="test-image" src={image} alt="test" quality="100" />
-          <div className="answer-section" key={questionNumber}>
+          <section className="answer-section" key={questionNumber}>
             {answerOptions.map((answerOption, index) => (
               <button
                 id={index}
@@ -60,8 +60,8 @@ export default function LanguageTestOne() {
               </button>
             ))}
             <p>Question {questionNumber}/40</p>
-          </div>
-        </section>
+          </section>
+        </>
       )}
     </>
   );

@@ -34,8 +34,8 @@ export default function AdvancedTestOne() {
       {testComplete ? (
         <AdvancedTestTwo newScore={score} />
       ) : (
-        <div className="language-test-container">
-          <section className="sub-question-container">
+        <section className="language-test-container">
+          <article className="sub-question-container">
             <h2>
               In this section you must choose the word which best fits each
               space in the text below.
@@ -51,10 +51,10 @@ export default function AdvancedTestOne() {
               heaviest load without sinking, and is therefore well-suited to
               bearing the ____ of tall buildings.
             </h4>
-          </section>
+          </article>
 
-          <h3 className="language-test-question">{question}</h3>
-          <div className="answer-section" key={questionNumber}>
+          <article className="answer-section" key={questionNumber}>
+            <h3 className="language-test-question">{question}</h3>
             {answerOptions.map((answerOption, index) => (
               <button
                 id={index}
@@ -66,8 +66,8 @@ export default function AdvancedTestOne() {
               </button>
             ))}
             <p>Question {questionNumber}/20</p>
-          </div>
-        </div>
+          </article>
+        </section>
       )}
     </>
   );

@@ -31,12 +31,10 @@ export default function LanguageTestThree(scoreTwo) {
   return (
     <>
       {testComplete ? (
-        <section>
-          <LanguageTestFour scoreThree={score} />
-        </section>
+        <LanguageTestFour scoreThree={score} />
       ) : (
-        <div className="language-test-container">
-          <section className="sub-question-container">
+        <section className="language-test-container">
+          <article className="sub-question-container">
             <h2>
               In this section you must choose the word which best fits each
               space in the text below.
@@ -53,10 +51,9 @@ export default function LanguageTestThree(scoreTwo) {
               days of the independent New York film companies were ____. When
               Alice died in 1968, hardly anybody ____ her name.
             </h4>
-          </section>
-
-          <h3 className="language-test-question">{question}</h3>
-          <div className="answer-section" key={questionNumber}>
+          </article>
+          <article className="answer-section" key={questionNumber}>
+            <h3 className="language-test-question">{question}</h3>
             {answerOptions.map((answerOption, index) => (
               <button
                 id={index}
@@ -68,8 +65,8 @@ export default function LanguageTestThree(scoreTwo) {
               </button>
             ))}
             <p>Question {questionNumber}/40</p>
-          </div>
-        </div>
+          </article>
+        </section>
       )}
     </>
   );

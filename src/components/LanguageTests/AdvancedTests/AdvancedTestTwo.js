@@ -31,8 +31,8 @@ export default function AdvancedTestTwo(newScore) {
       {testComplete ? (
         <AdvancedTestThree newScore={newScore} />
       ) : (
-        <div className="language-test-container">
-          <section className="sub-question-container">
+        <section className="language-test-container">
+          <article className="sub-question-container">
             <h2>
               In this section you must choose the word which best fits each
               space in the text below.
@@ -46,10 +46,9 @@ export default function AdvancedTestTwo(newScore) {
               design one. Eventually he made a ____ from it, in spite of the
               fact that his original ____ was only three cents a game.
             </h4>
-          </section>
-
-          <h3 className="language-test-question">{question}</h3>
-          <div className="answer-section" key={questionNumber}>
+          </article>
+          <article className="answer-section" key={questionNumber}>
+            <h3 className="language-test-question">{question}</h3>
             {answerOptions.map((answerOption, index) => (
               <button
                 id={index}
@@ -61,8 +60,8 @@ export default function AdvancedTestTwo(newScore) {
               </button>
             ))}
             <p>Question {questionNumber}/20</p>
-          </div>
-        </div>
+          </article>
+        </section>
       )}
     </>
   );

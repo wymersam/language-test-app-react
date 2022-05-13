@@ -27,14 +27,14 @@ export default function OptionToProgress(score) {
           <h4>Click 'Next' to continue the test</h4>
           <p>or</p>
           <h4>Click 'Finish' to finish the test and see your results</h4>
-          <div className="btn-wrap">
+          <article className="btn-wrap">
             <button className="finish-btn" onClick={() => handleFinish()}>
               Finish
             </button>
             <button className="advance-btn" onClick={() => handleNext()}>
               Next
             </button>
-          </div>
+          </article>
         </section>
       ) : next ? (
         <AdvancedTestOne />

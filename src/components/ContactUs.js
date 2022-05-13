@@ -16,7 +16,7 @@ export default function ContactUs(level) {
     setTextClass("show-text");
     setName("");
     setEmail("");
-    setFormClass("hide-text");
+    setFormClass("visually-hidden");
 
     emailjs
       .sendForm(
@@ -52,90 +52,86 @@ export default function ContactUs(level) {
       {({ course, media }) => {
         return (
           <>
-            <div className="contact-page">
+            <section className="contact-page">
               <form
                 ref={form}
                 onSubmit={name && email ? sendEmail : formError}
-                className="form-format"
+                className={formClass}
               >
-                <div className={formClass}>
-                  <h3 className="complete-test-text">
-                    To complete the test, please submit your name and email.
-                  </h3>
-                  <div>
-                    <label>Name: </label>
-                    <div className="form-section"></div>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      value={name}
-                      className={formErrorTextClass}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
+                <h3 className="complete-test-text">
+                  To complete the test, please submit your name and email.
+                </h3>
 
-                  <label>Email: </label>
-                  <div className="form-section ">
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      value={email}
-                      className={formErrorTextClass}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-section visually-hidden">
-                    <label>Course Recommendations: </label>
-                    <input
-                      type="text"
-                      name="courses"
-                      id="courses"
-                      value={course}
-                      readOnly
-                    />
-                  </div>
+                <label className="form-label-name">Name: </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={name}
+                  className={formErrorTextClass}
+                  onChange={(e) => setName(e.target.value)}
+                />
 
-                  <div className="form-section visually-hidden">
-                    <label>Media: </label>
-                    <input
-                      type="text"
-                      name="media"
-                      id="media"
-                      value={media}
-                      readOnly
-                    />
-                  </div>
-
-                  <div className="form-section visually-hidden">
-                    <label>Level: </label>
-                    <input
-                      type="text"
-                      name="level"
-                      id="level"
-                      value={grade}
-                      readOnly
-                    />
-                  </div>
-
-                  <button
-                    className="submit-btn"
-                    type="submit"
-                    value="Submit"
+                <label className="form-label-email">Email: </label>
+                <article className="form-section ">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={email}
+                    className={formErrorTextClass}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </article>
+                <article className="form-section visually-hidden">
+                  <label>Course Recommendations: </label>
+                  <input
+                    type="text"
+                    name="courses"
+                    id="courses"
+                    value={course}
                     readOnly
-                  >
-                    Submit
-                  </button>
-                </div>
+                  />
+                </article>
+
+                <article className="form-section visually-hidden">
+                  <label>Media: </label>
+                  <input
+                    type="text"
+                    name="media"
+                    id="media"
+                    value={media}
+                    readOnly
+                  />
+                </article>
+
+                <article className="form-section visually-hidden">
+                  <label>Level: </label>
+                  <input
+                    type="text"
+                    name="level"
+                    id="level"
+                    value={grade}
+                    readOnly
+                  />
+                </article>
+
+                <button
+                  className="submit-btn"
+                  type="submit"
+                  value="Submit"
+                  readOnly
+                >
+                  Submit
+                </button>
               </form>
               <p className={`contact-page-thanks-text ${textClass}`}>
                 Thanks! You have successfully submitted your results. Please
                 follow the link below to see your course recommendations:
               </p>
-            </div>
+            </section>
             {grade === "A1" ? (
-              <div className="link-wrapper">
+              <section>
                 <a
                   href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=71&katvaterid=64&katname=A1`}
                   target="_blank"
@@ -144,9 +140,9 @@ export default function ContactUs(level) {
                 >
                   <p className={textClass}>{grade} course recommendations</p>
                 </a>
-              </div>
+              </section>
             ) : grade === "A2" ? (
-              <div className="link-wrapper">
+              <section>
                 <a
                   href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=65&katvaterid=64&katname=A2`}
                   target="_blank"
@@ -155,9 +151,9 @@ export default function ContactUs(level) {
                 >
                   <p class={textClass}>{grade} course recommendations</p>
                 </a>
-              </div>
+              </section>
             ) : grade === "B1" ? (
-              <div className="link-wrapper">
+              <section>
                 <a
                   href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=66&katvaterid=64&katname=B1`}
                   target="_blank"
@@ -166,9 +162,9 @@ export default function ContactUs(level) {
                 >
                   <p className={textClass}>{grade} course recommendations</p>
                 </a>
-              </div>
+              </section>
             ) : grade === "B2" ? (
-              <div className="link-wrapper">
+              <section>
                 <a
                   href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=67&katvaterid=64&katname=B2`}
                   target="_blank"
@@ -177,9 +173,9 @@ export default function ContactUs(level) {
                 >
                   <p className={textClass}>{grade} course recommendations</p>
                 </a>
-              </div>
+              </section>
             ) : grade === "C1" ? (
-              <div className="link-wrapper">
+              <section>
                 <a
                   href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=69&katvaterid=64&katname=C1`}
                   target="_blank"
@@ -188,11 +184,11 @@ export default function ContactUs(level) {
                 >
                   <p className={textClass}>{grade} course recommendations</p>
                 </a>
-              </div>
+              </section>
             ) : (
               grade ===
               "C2"(
-                <div className="link-wrapper">
+                <section>
                   <a
                     href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=70&katvaterid=64&katname=C2`}
                     target="_blank"
@@ -201,7 +197,7 @@ export default function ContactUs(level) {
                   >
                     <p className={textClass}>{grade} course recommendations</p>
                   </a>
-                </div>
+                </section>
               )
             )}
           </>

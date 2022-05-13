@@ -31,20 +31,17 @@ export default function LanguageTestFive(scoreFour) {
   return (
     <>
       {testComplete ? (
-        <section>
-          <LanguageTestSix scoreFive={score} />
-        </section>
+        <LanguageTestSix scoreFive={score} />
       ) : (
-        <div className="language-test-container">
-          <section className="sub-question-container">
+        <section className="language-test-container">
+          <article className="sub-question-container">
             <h2>
               In this section you must choose the word which best fits each
               space in the text below.
             </h2>
-          </section>
-
-          <h3 className="language-test-question">{question}</h3>
-          <div className="answer-section" key={questionNumber}>
+          </article>
+          <article className="answer-section" key={questionNumber}>
+            <h3 className="language-test-question">{question}</h3>
             {answerOptions.map((answerOption, index) => (
               <button
                 id={index}
@@ -56,8 +53,8 @@ export default function LanguageTestFive(scoreFour) {
               </button>
             ))}
             <p>Question {questionNumber}/40</p>
-          </div>
-        </div>
+          </article>
+        </section>
       )}
     </>
   );

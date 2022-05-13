@@ -58,7 +58,7 @@ export default function PretestQuestions() {
         {formComplete ? (
           <LanguageTestOne />
         ) : (
-          <section>
+          <>
             <section className="pretest-questions-container">
               <h1 className="visually-hidden">Pretest Questions</h1>
               <h2 className="pretest-question-text-german">
@@ -86,7 +86,7 @@ export default function PretestQuestions() {
                 Next
               </button>
             </section>
-          </section>
+          </>
         )}
       </div>
     </MyContext.Provider>
