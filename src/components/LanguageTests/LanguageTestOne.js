@@ -16,7 +16,6 @@ export default function LanguageTestOne() {
       setScore(score + 1);
       nextQuestionTest();
     } else {
-      // storeIncorrectAnswer();
       nextQuestionTest();
     }
   }
@@ -29,15 +28,6 @@ export default function LanguageTestOne() {
       setTestComplete(true);
     }
   }
-
-  // function storeIncorrectAnswer() {
-  //   let answers = languageTestQuestionsOne[indexLanguageTest].answerOptions;
-  //   let questionId = languageTestQuestionsOne[indexLanguageTest].id;
-  //   answers = answers.map((answer) => answer.answerText);
-  //   let test = { answers: answers, id: questionId };
-  //   setIncorrectAnswers({ ...test, incorrectAnswers });
-  // }
-
   return (
     <>
       {testComplete ? (

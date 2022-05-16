@@ -2,7 +2,7 @@ export const languageTestQuestionsOne = [
   {
     id: 0,
     questionNumber: 1,
-    image: "./images/question-one-image.jpg",
+    image: "./images/question-one-image.webp",
     answerOptions: [
       { answerText: "in a shop", isCorrect: false },
       { answerText: "in a hotel", isCorrect: true },
@@ -12,7 +12,7 @@ export const languageTestQuestionsOne = [
   {
     id: 1,
     questionNumber: 2,
-    image: "./images/question-two-image.jpg",
+    image: "./images/question-two-image.webp",
     answerOptions: [
       { answerText: "in a library", isCorrect: false },
       { answerText: "in a bank", isCorrect: true },
@@ -22,7 +22,7 @@ export const languageTestQuestionsOne = [
   {
     id: 2,
     questionNumber: 3,
-    image: "./images/question-three-image.jpg",
+    image: "./images/question-three-image.webp",
     answerOptions: [
       { answerText: "outside a theatre", isCorrect: true },
       { answerText: "outside a supermarket", isCorrect: false },
@@ -32,7 +32,7 @@ export const languageTestQuestionsOne = [
   {
     id: 3,
     questionNumber: 4,
-    image: "./images/question-four-image.jpg",
+    image: "./images/question-four-image.webp",
     answerOptions: [
       { answerText: "at a travel agent's", isCorrect: false },
       { answerText: "at a music school", isCorrect: true },
@@ -42,7 +42,7 @@ export const languageTestQuestionsOne = [
   {
     id: 4,
     questionNumber: 5,
-    image: "./images/question-five-image.jpg",
+    image: "./images/question-five-image.webp",
     answerOptions: [
       { answerText: "at a cinema", isCorrect: false },
       { answerText: "in a hotel", isCorrect: false },
