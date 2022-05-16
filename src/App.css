@@ -134,7 +134,7 @@ a {
   margin: 0 auto;
   margin-top: 0.625em;
 }
-@media only screen and (min-width: 200px) and (max-width: 750px) {
+@media only screen and (min-width: 200px) and (max-width: 850px) {
   .language-test-container {
     max-width: 90%;
   }
@@ -147,9 +147,8 @@ a {
 /* LANGUAGE TEST ONE PAGE */
 .test-image {
   display: flex;
-  width: 31.25em;
-  max-width: 100%;
   margin-bottom: 1em;
+  max-width: 100%;
 }
 
 /* LANGUAGE TEST TWO PAGE */

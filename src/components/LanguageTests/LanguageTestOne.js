@@ -37,7 +37,13 @@ export default function LanguageTestOne() {
           <h3 className="language-test-question">
             Where can you see this notice?
           </h3>
-          <img className="test-image" src={image} alt="test" quality="100" />
+          <img
+            className="test-image"
+            src={image}
+            alt="test"
+            width="500em"
+            height="150em"
+          />
           <section className="answer-section" key={questionNumber}>
             {answerOptions.map((answerOption, index) => (
               <button
