@@ -22,7 +22,6 @@ export default function ContactUs({ level }) {
     errorMessage: "",
   });
 
-  // Memoize course recommendation URL
   const courseRecommendation = useMemo(() => {
     const baseUrl =
       "https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html";
@@ -41,7 +40,6 @@ export default function ContactUs({ level }) {
       : null;
   }, [level]);
 
-  // Handle input changes
   const handleInputChange = useCallback(
     (field) => (e) => {
       setFormData((prev) => ({
@@ -60,7 +58,6 @@ export default function ContactUs({ level }) {
     [formState.hasError]
   );
 
-  // Validate form
   const validateForm = useCallback(() => {
     const { name, email } = formData;
 
@@ -77,7 +74,6 @@ export default function ContactUs({ level }) {
     return { isValid: true };
   }, [formData]);
 
-  // Handle form submission
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -100,7 +96,7 @@ export default function ContactUs({ level }) {
 
       try {
         await emailjs.sendForm(
-          "service_ogax6ve",
+          "service_nzczfuh",
           "template_utaehz6",
           form.current,
           "user_O0EicnClTqFEK6Kl07ODl"
