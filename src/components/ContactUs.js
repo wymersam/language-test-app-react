@@ -1,214 +1,261 @@
-import React, { useRef, useState } from "react";
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+  useContext,
+} from "react";
 import emailjs from "@emailjs/browser";
 import { MyContext } from "../MyContext";
 
-export default function ContactUs(level) {
-  const grade = level.level;
+export default function ContactUs({ level }) {
+  const { course, media } = useContext(MyContext);
   const form = useRef();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [formClass, setFormClass] = useState("");
-  const [textClass, setTextClass] = useState("hide-text");
-  const [formErrorTextClass, setFormErrorTextClass] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
+  const [formState, setFormState] = useState({
+    isSubmitting: false,
+    isSubmitted: false,
+    hasError: false,
+    errorMessage: "",
+  });
 
-  const sendEmail = (e) => {
-    e.preventDefault();
-    setTextClass("show-text");
-    setName("");
-    setEmail("");
-    setFormClass("visually-hidden");
+  // Memoize course recommendation URL
+  const courseRecommendation = useMemo(() => {
+    const baseUrl =
+      "https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html";
+    const levelMap = {
+      A1: 71,
+      A2: 65,
+      B1: 66,
+      B2: 67,
+      C1: 69,
+      C2: 70,
+    };
 
-    emailjs
-      .sendForm(
-        "service_ogax6ve",
-        "template_utaehz6",
-        form.current,
-        "user_O0EicnClTqFEK6Kl07ODl"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-  };
+    const katid = levelMap[level];
+    return katid
+      ? `${baseUrl}?kathaupt=1&katid=${katid}&katvaterid=64&katname=${level}`
+      : null;
+  }, [level]);
 
-  function formError(e) {
-    e.preventDefault();
-    setFormErrorTextClass("form-error-text");
-    setName("Please add name");
-    setEmail("Please add email");
-    setTimeout(() => {
-      setName("");
-      setEmail("");
-      setFormErrorTextClass("");
-    }, 1000);
-  }
+  // Handle input changes
+  const handleInputChange = useCallback(
+    (field) => (e) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
+
+      if (formState.hasError) {
+        setFormState((prev) => ({
+          ...prev,
+          hasError: false,
+          errorMessage: "",
+        }));
+      }
+    },
+    [formState.hasError]
+  );
+
+  // Validate form
+  const validateForm = useCallback(() => {
+    const { name, email } = formData;
+
+    if (!name.trim())
+      return { isValid: false, message: "Please enter your name" };
+    if (!email.trim())
+      return { isValid: false, message: "Please enter your email" };
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return { isValid: false, message: "Please enter a valid email address" };
+    }
+
+    return { isValid: true };
+  }, [formData]);
+
+  // Handle form submission
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      const validation = validateForm();
+      if (!validation.isValid) {
+        setFormState((prev) => ({
+          ...prev,
+          hasError: true,
+          errorMessage: validation.message,
+        }));
+        return;
+      }
+
+      setFormState((prev) => ({
+        ...prev,
+        isSubmitting: true,
+        hasError: false,
+      }));
+
+      try {
+        await emailjs.sendForm(
+          "service_ogax6ve",
+          "template_utaehz6",
+          form.current,
+          "user_O0EicnClTqFEK6Kl07ODl"
+        );
+
+        setFormState((prev) => ({
+          ...prev,
+          isSubmitting: false,
+          isSubmitted: true,
+        }));
+        setFormData({ name: "", email: "" });
+      } catch (error) {
+        console.error("Email sending failed:", error);
+        setFormState((prev) => ({
+          ...prev,
+          isSubmitting: false,
+          hasError: true,
+          errorMessage: "Failed to send email. Please try again.",
+        }));
+      }
+    },
+    [validateForm]
+  );
+
+  const { isSubmitting, isSubmitted, hasError, errorMessage } = formState;
+  const { name, email } = formData;
 
   return (
-    <MyContext.Consumer>
-      {({ course, media }) => {
-        return (
-          <>
-            <section className="contact-page">
-              <form
-                ref={form}
-                onSubmit={name && email ? sendEmail : formError}
-                className={formClass}
-              >
-                <h3 className="complete-test-text">
-                  To complete the test, please submit your name and email.
-                </h3>
+    <div className="contact-us-container">
+      {!isSubmitted ? (
+        <section className="contact-page">
+          <div className="contact-form-wrapper">
+            <header className="contact-header">
+              <p className="contact-subtitle">
+                Please provide your details to receive personalized course
+                recommendations for your {level} level.
+              </p>
+            </header>
 
-                <label for="name" className="form-label-name">
-                  Name:{" "}
+            <form
+              ref={form}
+              onSubmit={handleSubmit}
+              className="contact-form"
+              noValidate
+            >
+              {hasError && (
+                <div
+                  className="form-error-message"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  <span className="error-icon" aria-hidden="true">
+                    ⚠️
+                  </span>
+                  {errorMessage}
+                </div>
+              )}
+
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">
+                  Full Name <span className="required-asterisk">*</span>
                 </label>
                 <input
                   type="text"
                   name="name"
                   id="name"
                   value={name}
-                  className={formErrorTextClass}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={handleInputChange("name")}
+                  className={`form-input ${hasError ? "form-input-error" : ""}`}
+                  placeholder="Enter your full name"
+                  required
+                  aria-describedby={hasError ? "form-error" : undefined}
                 />
+              </div>
 
-                <label for="email" className="form-label-email">
-                  Email:{" "}
+              <div className="form-group">
+                <label htmlFor="email" className="form-label">
+                  Email Address <span className="required-asterisk">*</span>
                 </label>
-                <article>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={email}
-                    className={formErrorTextClass}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </article>
-                <article className="visually-hidden">
-                  <label for="course-recommendations">
-                    Course Recommendations:{" "}
-                  </label>
-                  <input
-                    type="text"
-                    name="courses"
-                    id="courses"
-                    value={course}
-                    readOnly
-                  />
-                </article>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={email}
+                  onChange={handleInputChange("email")}
+                  className={`form-input ${hasError ? "form-input-error" : ""}`}
+                  placeholder="Enter your email address"
+                  required
+                  aria-describedby={hasError ? "form-error" : undefined}
+                />
+              </div>
 
-                <article className="visually-hidden">
-                  <label for="media">Media: </label>
-                  <input
-                    type="text"
-                    name="media"
-                    id="media"
-                    value={media}
-                    readOnly
-                  />
-                </article>
+              {/* Hidden fields for EmailJS */}
+              <input type="hidden" name="courses" value={course || ""} />
+              <input type="hidden" name="media" value={media || ""} />
+              <input type="hidden" name="level" value={level || ""} />
 
-                <article className="visually-hidden">
-                  <label for="level">Level: </label>
-                  <input
-                    type="text"
-                    name="level"
-                    id="level"
-                    value={grade}
-                    readOnly
-                  />
-                </article>
+              <button
+                type="submit"
+                className="submit-btn test-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="loading-spinner" aria-hidden="true"></span>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <span className="btn-icon" aria-hidden="true">
+                      📧
+                    </span>
+                    Get My Course Recommendations
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        </section>
+      ) : (
+        <section className="success-section">
+          <div className="success-container">
+            <div className="success-icon" aria-hidden="true">
+              ✅
+            </div>
+            <h3 className="success-title">Thank You!</h3>
+            <p className="success-message">
+              Your assessment results have been submitted successfully.
+            </p>
 
-                <button
-                  className="submit-btn"
-                  type="submit"
-                  value="Submit"
-                  readOnly
-                >
-                  Submit
-                </button>
-              </form>
-              <p className={`contact-page-thanks-text ${textClass}`}>
-                Thanks! You have successfully submitted your results. Please
-                follow the link below to see your course recommendations:
-              </p>
-            </section>
-            {grade === "A1" ? (
-              <section>
+            {courseRecommendation && (
+              <div className="course-recommendations">
+                <h4 className="recommendations-title">
+                  Your {level} Level Course Recommendations
+                </h4>
                 <a
-                  href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=71&katvaterid=64&katname=A1`}
+                  href={courseRecommendation}
                   target="_blank"
-                  rel="noreferrer"
-                  className={`recommendations-link {textClass}`}
+                  rel="noopener noreferrer"
+                  className="recommendations-link"
+                  aria-label={`View ${level} level course recommendations (opens in new tab)`}
                 >
-                  <p className={textClass}>{grade} course recommendations</p>
+                  <span className="link-icon" aria-hidden="true">
+                    🎓
+                  </span>
+                  View {level} Course Recommendations
+                  <span className="external-icon" aria-hidden="true">
+                    ↗
+                  </span>
                 </a>
-              </section>
-            ) : grade === "A2" ? (
-              <section>
-                <a
-                  href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=65&katvaterid=64&katname=A2`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`recommendations-link {textClass}`}
-                >
-                  <p class={textClass}>{grade} course recommendations</p>
-                </a>
-              </section>
-            ) : grade === "B1" ? (
-              <section>
-                <a
-                  href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=66&katvaterid=64&katname=B1`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`recommendations-link {textClass}`}
-                >
-                  <p className={textClass}>{grade} course recommendations</p>
-                </a>
-              </section>
-            ) : grade === "B2" ? (
-              <section>
-                <a
-                  href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=67&katvaterid=64&katname=B2`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`recommendations-link {textClass}`}
-                >
-                  <p className={textClass}>{grade} course recommendations</p>
-                </a>
-              </section>
-            ) : grade === "C1" ? (
-              <section>
-                <a
-                  href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=69&katvaterid=64&katname=C1`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`recommendations-link {textClass}`}
-                >
-                  <p className={textClass}>{grade} course recommendations</p>
-                </a>
-              </section>
-            ) : (
-              grade ===
-              "C2"(
-                <section>
-                  <a
-                    href={`https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html?kathaupt=1&katid=70&katvaterid=64&katname=C2`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`recommendations-link {textClass}`}
-                  >
-                    <p className={textClass}>{grade} course recommendations</p>
-                  </a>
-                </section>
-              )
+              </div>
             )}
-          </>
-        );
-      }}
-    </MyContext.Consumer>
+          </div>
+        </section>
+      )}
+    </div>
   );
 }

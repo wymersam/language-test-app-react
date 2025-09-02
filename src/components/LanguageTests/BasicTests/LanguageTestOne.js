@@ -1,56 +1,61 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { advancedQuestionsTwo } from "../../../questions/advanced-questions-two";
-import AdvancedTestThree from "./AdvancedTestThree";
+import LanguageTestTwo from "./LanguageTestTwo";
+import { languageTestQuestionsOne } from "../../../questions/language-test-questions-one";
 
-export default function AdvancedTestTwo({ newScore }) {
+export default function LanguageTestOne() {
   const [indexLanguageTest, setIndexLanguageTest] = useState(0);
-  const [score, setScore] = useState(newScore);
+  const [score, setScore] = useState(0);
   const [testComplete, setTestComplete] = useState(false);
 
-  // Get current question data
-  const currentQuestion = advancedQuestionsTwo[indexLanguageTest];
-  const { answerOptions, questionNumber, id, question } = currentQuestion;
+  // Memoize current question data to prevent unnecessary recalculations
+  const currentQuestion = useMemo(() => {
+    return languageTestQuestionsOne[indexLanguageTest] || {};
+  }, [indexLanguageTest]);
+
+  const { image, answerOptions = [], id } = currentQuestion;
+
+  // Calculate current question number based on array index (1-based)
   const currentQuestionNumber = indexLanguageTest + 1;
 
-  // Calculate progress
+  // Calculate progress percentage
   const progress = useMemo(() => {
     return Math.round(
-      (currentQuestionNumber / advancedQuestionsTwo.length) * 100
+      (currentQuestionNumber / languageTestQuestionsOne.length) * 100
     );
   }, [currentQuestionNumber]);
 
   const nextQuestionTest = useCallback(() => {
-    let nextQuestionIndex = id + 1;
-    if (nextQuestionIndex < advancedQuestionsTwo.length) {
+    const nextQuestionIndex = id + 1;
+    if (nextQuestionIndex < languageTestQuestionsOne.length) {
       setIndexLanguageTest(nextQuestionIndex);
     } else {
       setTestComplete(true);
     }
   }, [id]);
 
+  // Optimize event handlers with useCallback
   const handleAnswerClickTest = useCallback(
     (isCorrect) => {
+      console.log(isCorrect);
       if (isCorrect) {
         setScore((prevScore) => prevScore + 1);
+        nextQuestionTest();
+      } else {
+        nextQuestionTest();
       }
-      nextQuestionTest();
     },
     [nextQuestionTest]
   );
-
   return (
-    <div>
+    <div className="language-test-container">
       {testComplete ? (
-        <AdvancedTestThree newScore={score} />
+        <LanguageTestTwo scoreOne={score} />
       ) : (
         <div className="test-content">
           <header className="question-header">
             <h2 className="language-test-question" id="question-title">
-              Advanced Level Assessment - Reading Comprehension
+              Where can you see this notice?
             </h2>
-            <p className="test-instructions">
-              Choose the word which best fits each space in the text below.
-            </p>
           </header>
 
           {/* Progress Bar */}
@@ -69,30 +74,24 @@ export default function AdvancedTestTwo({ newScore }) {
           </div>
           <div className="progress-info">
             <p className="question-counter">
-              Question {currentQuestionNumber} of {advancedQuestionsTwo.length}
+              Question {currentQuestionNumber} of{" "}
+              {languageTestQuestionsOne.length}
             </p>
           </div>
 
-          {/* Reading Passage */}
-          <div className="passage-container">
-            <h3 className="passage-title">SCRABBLE</h3>
-            <p className="passage-text">
-              Scrabble is the world's most popular word game. For its origins,
-              we have to go back to the 1930s in the USA, when Alfred Butts, an
-              architect, found himself out of <span>____</span>. He decided that
-              there was a <span>____</span> for a board game based on words and{" "}
-              <span>____</span> to design one. Eventually he made a{" "}
-              <span>____</span> from it, in spite of the fact that his original{" "}
-              <span>____</span> was only three cents a game.
-            </p>
-          </div>
-
-          {/* Current Question Focus */}
-          <div className="current-question-focus">
-            <h3 className="question-focus-title">Question {questionNumber}:</h3>
-            <p className="question-focus-text">
-              {question.replace(/____/g, "______")}
-            </p>
+          <div className="image-container">
+            <img
+              className="test-image"
+              src={image}
+              alt={`Test question ${currentQuestionNumber} notice`}
+              width="500"
+              height="150"
+              loading="lazy"
+              onError={(e) => {
+                e.target.alt = "Content could not be loaded";
+                e.target.style.border = "2px dashed #ccc";
+              }}
+            />
           </div>
 
           <section

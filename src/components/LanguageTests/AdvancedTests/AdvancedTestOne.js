@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { advancedQuestions } from "../../../questions/advanced-questions-one";
 import AdvancedTestTwo from "./AdvancedTestTwo";
 
@@ -7,68 +7,121 @@ export default function AdvancedTestOne() {
   testScore = parseInt(testScore, 10);
 
   const [indexLanguageTest, setIndexLanguageTest] = useState(0);
-  const { answerOptions, questionNumber, id, question } =
-    advancedQuestions[indexLanguageTest];
   const [score, setScore] = useState(testScore);
   const [testComplete, setTestComplete] = useState(false);
-  function handleAnswerClickTest(isCorrect) {
-    if (isCorrect) {
-      setScore(score + 1);
-      nextQuestionTest();
-    } else {
-      nextQuestionTest();
-    }
-  }
 
-  function nextQuestionTest() {
-    let nextQuestionTest = id + 1;
-    if (nextQuestionTest < advancedQuestions.length) {
-      setIndexLanguageTest(nextQuestionTest);
+  // Get current question data
+  const currentQuestion = advancedQuestions[indexLanguageTest];
+  const { answerOptions, questionNumber, id, question } = currentQuestion;
+  const currentQuestionNumber = indexLanguageTest + 1;
+
+  // Calculate progress
+  const progress = useMemo(() => {
+    return Math.round((currentQuestionNumber / advancedQuestions.length) * 100);
+  }, [currentQuestionNumber]);
+
+  const nextQuestionTest = useCallback(() => {
+    let nextQuestionIndex = id + 1;
+    if (nextQuestionIndex < advancedQuestions.length) {
+      setIndexLanguageTest(nextQuestionIndex);
     } else {
       setTestComplete(true);
     }
-  }
+  }, [id]);
+
+  const handleAnswerClickTest = useCallback(
+    (isCorrect) => {
+      if (isCorrect) {
+        setScore((prevScore) => prevScore + 1);
+      }
+      nextQuestionTest();
+    },
+    [nextQuestionTest]
+  );
 
   return (
-    <>
+    <div>
       {testComplete ? (
         <AdvancedTestTwo newScore={score} />
       ) : (
-        <section className="language-test-container">
-          <article className="sub-question-container">
-            <h2>
-              In this section you must choose the word which best fits each
-              space in the text below.
+        <div className="test-content">
+          <header className="question-header">
+            <h2 className="language-test-question" id="question-title">
+              Advanced Level Assessment - Reading Comprehension
             </h2>
-            <hr className="line"></hr>
-            <h4 className="sub-question-text">
-              The tallest buildings - SKYSCRAPERS Nowadays, skyscrapers can be
-              found in most major cities of the world. A building which was many
-              ____ high was first called a skyscraper in the United States at
-              the end of the 19th century, and New York has perhaps the ____
-              skyscraper of them all, the Empires State Building. The ____
-              beneath the streets of New York is rock, ____ enough to take the
-              heaviest load without sinking, and is therefore well-suited to
-              bearing the ____ of tall buildings.
-            </h4>
-          </article>
+            <p className="test-instructions">
+              Choose the word which best fits each space in the text below.
+            </p>
+          </header>
 
-          <article className="answer-section" key={questionNumber}>
-            <h3 className="language-test-question">{question}</h3>
+          {/* Progress Bar */}
+          <div
+            className="progress-container"
+            role="progressbar"
+            aria-valuenow={progress}
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div
+              className="progress-bar"
+              style={{ width: `${progress}%` }}
+              aria-label={`${progress}% complete`}
+            />
+          </div>
+          <div className="progress-info">
+            <p className="question-counter">
+              Question {currentQuestionNumber} of {advancedQuestions.length}
+            </p>
+          </div>
+
+          {/* Reading Passage */}
+          <div className="passage-container">
+            <h3 className="passage-title">
+              The Tallest Buildings - SKYSCRAPERS
+            </h3>
+            <p className="passage-text">
+              Nowadays, skyscrapers can be found in most major cities of the
+              world. A building which was many <span>____</span> high was first
+              called a skyscraper in the United States at the end of the 19th
+              century, and New York has perhaps the <span>____</span> skyscraper
+              of them all, the Empire State Building. The <span>____</span>{" "}
+              beneath the streets of New York is rock, <span>____</span> enough
+              to take the heaviest load without sinking, and is therefore
+              well-suited to bearing the <span>____</span> of tall buildings.
+            </p>
+          </div>
+
+          {/* Current Question Focus */}
+          <div className="current-question-focus">
+            <h3 className="question-focus-title">Question {questionNumber}:</h3>
+            <p className="question-focus-text">
+              {question.replace(/____/g, "______")}
+            </p>
+          </div>
+
+          <section
+            className="answer-section"
+            key={currentQuestionNumber}
+            aria-labelledby="question-title"
+            role="group"
+          >
             {answerOptions.map((answerOption, index) => (
               <button
-                id={index}
-                key={index}
+                key={`question-${currentQuestionNumber}-answer-${index}`}
                 onClick={() => handleAnswerClickTest(answerOption.isCorrect)}
                 className="answer-btn test-btn"
+                type="button"
+                aria-describedby="question-title"
               >
-                {answerOption.answerText}
+                <span className="answer-number" aria-hidden="true">
+                  {index + 1}.
+                </span>
+                <span className="answer-text">{answerOption.answerText}</span>
               </button>
             ))}
-            <p>Question {questionNumber}/20</p>
-          </article>
-        </section>
+          </section>
+        </div>
       )}
-    </>
+    </div>
   );
 }

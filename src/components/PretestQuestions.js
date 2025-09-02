@@ -1,56 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { MyContext } from "../MyContext";
 import { pretestQuestions } from "../questions/pretest-questions";
-import LanguageTestOne from "./LanguageTests/LanguageTestOne";
+import LanguageTestOne from "./LanguageTests/BasicTests/LanguageTestOne";
 
 export default function PretestQuestions() {
   const [index, setIndex] = useState(0);
-  const { questionTextGerman, questionTextEnglish, answerOptions } =
-    pretestQuestions[index];
   const [classOptions, setClassOptions] = useState([]);
   const [courseMedia, setCourseMedia] = useState([]);
   const [formComplete, setFormComplete] = useState(false);
-  const [style, setStyle] = useState("answer-btn");
+  const [selectedOptions, setSelectedOptions] = useState(new Set());
 
-  function handleAnswerClick(e, answerClass) {
-    let current = e.target;
-    current.classList.toggle("pretest-answer-btn-clicked");
-    handleAnswer(answerClass);
-  }
+  // Get current question data
+  const currentQuestion = pretestQuestions[index];
+  const { questionTextGerman, questionTextEnglish, answerOptions } =
+    currentQuestion;
+  const currentQuestionNumber = index + 1;
 
-  function handleAnswer(answerClass) {
-    if (pretestQuestions[index].id === 2) {
-      handleCourseMedia(answerClass);
-    } else {
-      handleAnswerClass(answerClass);
-    }
-  }
+  // Calculate progress
+  const progress = useMemo(() => {
+    return Math.round((currentQuestionNumber / pretestQuestions.length) * 100);
+  }, [currentQuestionNumber]);
 
-  function handleCourseMedia(answerClass) {
-    if (courseMedia.includes(answerClass)) {
-      const newCourseMedia = courseMedia.filter((t) => t !== answerClass);
-      setCourseMedia(newCourseMedia);
-    } else setCourseMedia([...courseMedia, answerClass]);
-  }
+  // Check if current question allows multiple selections
+  const isMultipleChoice = useMemo(() => {
+    return currentQuestion.id === 1 || currentQuestion.id === 2;
+  }, [currentQuestion.id]);
 
-  function handleAnswerClass(answerClass) {
-    if (classOptions.includes(answerClass)) {
-      const newAnswerClass = classOptions.filter((t) => t !== answerClass);
-      setClassOptions(newAnswerClass);
-    } else setClassOptions([...classOptions, answerClass]);
-  }
+  const handleCourseMedia = useCallback((answerClass) => {
+    setCourseMedia((prev) => {
+      if (prev.includes(answerClass)) {
+        return prev.filter((item) => item !== answerClass);
+      } else {
+        return [...prev, answerClass];
+      }
+    });
+  }, []);
 
-  function nextQuestion() {
-    let nextQuestion = index + 1;
-    if (nextQuestion < pretestQuestions.length) {
-      setIndex(nextQuestion);
-      setStyle("");
-      setStyle("pretest-answer-btn-refresh");
+  const handleAnswerClass = useCallback((answerClass) => {
+    setClassOptions((prev) => {
+      if (prev.includes(answerClass)) {
+        return prev.filter((item) => item !== answerClass);
+      } else {
+        return [...prev, answerClass];
+      }
+    });
+  }, []);
+
+  const handleAnswerClick = useCallback(
+    (answerClass, answerText) => {
+      if (currentQuestion.id === 2) {
+        handleCourseMedia(answerClass);
+      } else {
+        handleAnswerClass(answerClass);
+      }
+
+      // Update selected options for visual feedback
+      setSelectedOptions((prev) => {
+        const newSelected = new Set(prev);
+        if (newSelected.has(answerClass)) {
+          newSelected.delete(answerClass);
+        } else {
+          if (!isMultipleChoice) {
+            newSelected.clear();
+          }
+          newSelected.add(answerClass);
+        }
+        return newSelected;
+      });
+    },
+    [currentQuestion.id, isMultipleChoice, handleCourseMedia, handleAnswerClass]
+  );
+
+  const nextQuestion = useCallback(() => {
+    const nextQuestionIndex = index + 1;
+    if (nextQuestionIndex < pretestQuestions.length) {
+      setIndex(nextQuestionIndex);
+      setSelectedOptions(new Set());
     } else {
       setFormComplete(true);
     }
-  }
-  //localStorage.clear(); clear local storage at end of session
+  }, [index]);
+
+  // Check if user can proceed (has made at least one selection)
+  const canProceed = useMemo(() => {
+    return selectedOptions.size > 0;
+  }, [selectedOptions]);
 
   return (
     <MyContext.Provider value={{ course: classOptions, media: courseMedia }}>
@@ -58,35 +92,101 @@ export default function PretestQuestions() {
         {formComplete ? (
           <LanguageTestOne />
         ) : (
-          <>
+          <div className="pretest-content">
+            {/* Progress Bar */}
+            <div
+              className="progress-container"
+              role="progressbar"
+              aria-valuenow={progress}
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <div
+                className="progress-bar"
+                style={{ width: `${progress}%` }}
+                aria-label={`${progress}% complete`}
+              />
+            </div>
+            <div className="progress-info">
+              <p className="question-counter">
+                Question {currentQuestionNumber} of {pretestQuestions.length}
+              </p>
+            </div>
+
             <section className="pretest-questions-container">
-              <h1 className="visually-hidden">Pretest Questions</h1>
-              <h2 className="pretest-question-text-german">
-                {questionTextGerman}
-              </h2>
-              <hr></hr>
-              <h2 className="pretest-question-text-english">
-                {questionTextEnglish}
-              </h2>
+              <div className="question-content">
+                <h2 className="pretest-question-text-german">
+                  {questionTextGerman}
+                </h2>
+                <h3 className="pretest-question-text-english">
+                  {questionTextEnglish}
+                </h3>
+              </div>
             </section>
+
             <section className="pretest-answer-section">
-              {answerOptions.map((answerOption, index) => (
+              <div className="answer-grid">
+                {answerOptions.map((answerOption, optionIndex) => {
+                  const isSelected = selectedOptions.has(
+                    answerOption.answerClass
+                  );
+                  return (
+                    <button
+                      key={`option-${optionIndex}`}
+                      className={`pretest-answer-btn ${
+                        isSelected ? "selected" : ""
+                      }`}
+                      onClick={() =>
+                        handleAnswerClick(
+                          answerOption.answerClass,
+                          answerOption.answerText
+                        )
+                      }
+                      type="button"
+                      aria-pressed={isSelected}
+                    >
+                      <span className="option-text">
+                        {answerOption.answerText}
+                      </span>
+                      {isSelected && (
+                        <span
+                          className="selection-indicator"
+                          aria-hidden="true"
+                        >
+                          ✓
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="navigation-section">
                 <button
-                  id={index}
-                  className={style}
-                  key={index}
-                  onClick={(e) =>
-                    handleAnswerClick(e, answerOption.answerClass)
-                  }
+                  onClick={nextQuestion}
+                  className={`next-btn test-btn ${
+                    !canProceed ? "disabled" : ""
+                  }`}
+                  disabled={!canProceed}
+                  type="button"
                 >
-                  {answerOption.answerText}
+                  <span className="btn-text">
+                    {currentQuestionNumber === pretestQuestions.length
+                      ? "Start Test"
+                      : "Next Question"}
+                  </span>
+                  <span className="btn-icon" aria-hidden="true">
+                    →
+                  </span>
                 </button>
-              ))}
-              <button onClick={() => nextQuestion()} className="next-btn">
-                Next
-              </button>
+                {!canProceed && (
+                  <p className="selection-hint">
+                    Please make at least one selection to continue
+                  </p>
+                )}
+              </div>
             </section>
-          </>
+          </div>
         )}
       </div>
     </MyContext.Provider>
