@@ -10,15 +10,17 @@ export default function AdvancedTestOne() {
   const [score, setScore] = useState(testScore);
   const [testComplete, setTestComplete] = useState(false);
 
-  // Get current question data
   const currentQuestion = advancedQuestions[indexLanguageTest];
   const { answerOptions, questionNumber, id, question } = currentQuestion;
   const currentQuestionNumber = indexLanguageTest + 1;
 
-  // Calculate progress
-  const progress = useMemo(() => {
-    return Math.round((currentQuestionNumber / advancedQuestions.length) * 100);
+  const cumulativeQuestionNumber = useMemo(() => {
+    return 40 + currentQuestionNumber;
   }, [currentQuestionNumber]);
+
+  const progress = useMemo(() => {
+    return Math.round((cumulativeQuestionNumber / 60) * 100);
+  }, [cumulativeQuestionNumber]);
 
   const nextQuestionTest = useCallback(() => {
     let nextQuestionIndex = id + 1;
@@ -54,7 +56,6 @@ export default function AdvancedTestOne() {
             </p>
           </header>
 
-          {/* Progress Bar */}
           <div
             className="progress-container"
             role="progressbar"
@@ -70,11 +71,10 @@ export default function AdvancedTestOne() {
           </div>
           <div className="progress-info">
             <p className="question-counter">
-              Question {currentQuestionNumber} of {advancedQuestions.length}
+              Question {cumulativeQuestionNumber} of 60
             </p>
           </div>
 
-          {/* Reading Passage */}
           <div className="passage-container">
             <h3 className="passage-title">
               The Tallest Buildings - SKYSCRAPERS
@@ -91,7 +91,6 @@ export default function AdvancedTestOne() {
             </p>
           </div>
 
-          {/* Current Question Focus */}
           <div className="current-question-focus">
             <h3 className="question-focus-title">Question {questionNumber}:</h3>
             <p className="question-focus-text">

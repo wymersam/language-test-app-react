@@ -7,22 +7,21 @@ export default function LanguageTestOne() {
   const [score, setScore] = useState(0);
   const [testComplete, setTestComplete] = useState(false);
 
-  // Memoize current question data to prevent unnecessary recalculations
   const currentQuestion = useMemo(() => {
     return languageTestQuestionsOne[indexLanguageTest] || {};
   }, [indexLanguageTest]);
 
   const { image, answerOptions = [], id } = currentQuestion;
 
-  // Calculate current question number based on array index (1-based)
   const currentQuestionNumber = indexLanguageTest + 1;
 
-  // Calculate progress percentage
-  const progress = useMemo(() => {
-    return Math.round(
-      (currentQuestionNumber / languageTestQuestionsOne.length) * 100
-    );
+  const cumulativeQuestionNumber = useMemo(() => {
+    return currentQuestionNumber;
   }, [currentQuestionNumber]);
+
+  const progress = useMemo(() => {
+    return Math.round((cumulativeQuestionNumber / 40) * 100);
+  }, [cumulativeQuestionNumber]);
 
   const nextQuestionTest = useCallback(() => {
     const nextQuestionIndex = id + 1;
@@ -33,7 +32,6 @@ export default function LanguageTestOne() {
     }
   }, [id]);
 
-  // Optimize event handlers with useCallback
   const handleAnswerClickTest = useCallback(
     (isCorrect) => {
       console.log(isCorrect);
@@ -74,8 +72,7 @@ export default function LanguageTestOne() {
           </div>
           <div className="progress-info">
             <p className="question-counter">
-              Question {currentQuestionNumber} of{" "}
-              {languageTestQuestionsOne.length}
+              Question {cumulativeQuestionNumber} of 40
             </p>
           </div>
 

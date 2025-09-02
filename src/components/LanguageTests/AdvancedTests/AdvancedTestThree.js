@@ -7,17 +7,17 @@ export default function AdvancedTestThree({ newScore }) {
   const [score, setScore] = useState(newScore);
   const [testComplete, setTestComplete] = useState(false);
 
-  // Get current question data
   const currentQuestion = advancedQuestionsThree[indexLanguageTest];
   const { answerOptions, questionNumber, id, question } = currentQuestion;
   const currentQuestionNumber = indexLanguageTest + 1;
 
-  // Calculate progress
-  const progress = useMemo(() => {
-    return Math.round(
-      (currentQuestionNumber / advancedQuestionsThree.length) * 100
-    );
+  const cumulativeQuestionNumber = useMemo(() => {
+    return 50 + currentQuestionNumber;
   }, [currentQuestionNumber]);
+
+  const progress = useMemo(() => {
+    return Math.round((cumulativeQuestionNumber / 60) * 100);
+  }, [cumulativeQuestionNumber]);
 
   const nextQuestionTest = useCallback(() => {
     let nextQuestionIndex = id + 1;
@@ -53,7 +53,6 @@ export default function AdvancedTestThree({ newScore }) {
             </p>
           </header>
 
-          {/* Progress Bar */}
           <div
             className="progress-container"
             role="progressbar"
@@ -69,12 +68,10 @@ export default function AdvancedTestThree({ newScore }) {
           </div>
           <div className="progress-info">
             <p className="question-counter">
-              Question {currentQuestionNumber} of{" "}
-              {advancedQuestionsThree.length}
+              Question {cumulativeQuestionNumber} of 60
             </p>
           </div>
 
-          {/* Question Section */}
           <div className="current-question-focus">
             <h3 className="question-focus-title">Question {questionNumber}:</h3>
             <p className="question-focus-text">{question}</p>

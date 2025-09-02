@@ -7,17 +7,17 @@ export default function AdvancedTestTwo({ newScore }) {
   const [score, setScore] = useState(newScore);
   const [testComplete, setTestComplete] = useState(false);
 
-  // Get current question data
   const currentQuestion = advancedQuestionsTwo[indexLanguageTest];
   const { answerOptions, questionNumber, id, question } = currentQuestion;
   const currentQuestionNumber = indexLanguageTest + 1;
 
-  // Calculate progress
-  const progress = useMemo(() => {
-    return Math.round(
-      (currentQuestionNumber / advancedQuestionsTwo.length) * 100
-    );
+  const cumulativeQuestionNumber = useMemo(() => {
+    return 45 + currentQuestionNumber; // Starts at question 46
   }, [currentQuestionNumber]);
+
+  const progress = useMemo(() => {
+    return Math.round((cumulativeQuestionNumber / 60) * 100);
+  }, [cumulativeQuestionNumber]);
 
   const nextQuestionTest = useCallback(() => {
     let nextQuestionIndex = id + 1;
@@ -53,7 +53,6 @@ export default function AdvancedTestTwo({ newScore }) {
             </p>
           </header>
 
-          {/* Progress Bar */}
           <div
             className="progress-container"
             role="progressbar"
@@ -69,11 +68,10 @@ export default function AdvancedTestTwo({ newScore }) {
           </div>
           <div className="progress-info">
             <p className="question-counter">
-              Question {currentQuestionNumber} of {advancedQuestionsTwo.length}
+              Question {cumulativeQuestionNumber} of 60
             </p>
           </div>
 
-          {/* Reading Passage */}
           <div className="passage-container">
             <h3 className="passage-title">SCRABBLE</h3>
             <p className="passage-text">
@@ -87,7 +85,6 @@ export default function AdvancedTestTwo({ newScore }) {
             </p>
           </div>
 
-          {/* Current Question Focus */}
           <div className="current-question-focus">
             <h3 className="question-focus-title">Question {questionNumber}:</h3>
             <p className="question-focus-text">

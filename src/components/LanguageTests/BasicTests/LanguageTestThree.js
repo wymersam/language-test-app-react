@@ -8,20 +8,21 @@ export default function LanguageTestThree(scoreTwo) {
   const [score, setScore] = useState(currentScore.scoreTwo);
   const [testComplete, setTestComplete] = useState(false);
 
-  // Memoize current question data to prevent unnecessary recalculations
   const currentQuestion = useMemo(() => {
     return questionsThree[indexLanguageTest] || {};
   }, [indexLanguageTest]);
 
   const { question, answerOptions = [], id } = currentQuestion;
 
-  // Calculate current question number based on array index (1-based)
   const currentQuestionNumber = indexLanguageTest + 1;
 
-  // Calculate progress percentage
-  const progress = useMemo(() => {
-    return Math.round((currentQuestionNumber / questionsThree.length) * 100);
+  const cumulativeQuestionNumber = useMemo(() => {
+    return 10 + currentQuestionNumber;
   }, [currentQuestionNumber]);
+
+  const progress = useMemo(() => {
+    return Math.round((cumulativeQuestionNumber / 40) * 100);
+  }, [cumulativeQuestionNumber]);
 
   const nextQuestionTest = useCallback(() => {
     const nextQuestionIndex = id + 1;
@@ -32,7 +33,6 @@ export default function LanguageTestThree(scoreTwo) {
     }
   }, [id]);
 
-  // Optimize event handlers with useCallback
   const handleAnswerClickTest = useCallback(
     (isCorrect) => {
       if (isCorrect) {
@@ -58,17 +58,22 @@ export default function LanguageTestThree(scoreTwo) {
             </h2>
           </header>
 
-          {/* Progress Bar */}
           <div
             className="progress-container"
             role="progressbar"
             aria-valuenow={progress}
             aria-valuemin="0"
             aria-valuemax="100"
-          ></div>
+          >
+            <div
+              className="progress-bar"
+              style={{ width: `${progress}%` }}
+              aria-label={`${progress}% complete`}
+            />
+          </div>
           <div className="progress-info">
             <p className="question-counter">
-              Question {currentQuestionNumber} of {questionsThree.length}
+              Question {cumulativeQuestionNumber} of 40
             </p>
           </div>
 
