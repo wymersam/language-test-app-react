@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { advancedQuestionsThree } from "../../../questions/advanced-questions-three";
-import FinalTestResults from "../../ResultsPages/FinalTestResults";
+import TestResults from "../../ResultsPages/TestResults";
 
 export default function AdvancedTestThree({ newScore }) {
   const [indexLanguageTest, setIndexLanguageTest] = useState(0);
@@ -41,7 +41,7 @@ export default function AdvancedTestThree({ newScore }) {
   return (
     <div>
       {testComplete ? (
-        <FinalTestResults finalScore={score} />
+        <TestResults finalScore={score} isAdvanced={true} />
       ) : (
         <div className="test-content">
           <header className="question-header">
