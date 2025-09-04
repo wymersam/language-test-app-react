@@ -44,15 +44,6 @@ export default function AdvancedTestThree({ newScore }) {
         <TestResults finalScore={score} isAdvanced={true} />
       ) : (
         <div className="test-content">
-          <header className="question-header">
-            <h2 className="language-test-question" id="question-title">
-              Advanced Level Assessment - Grammar & Vocabulary
-            </h2>
-            <p className="test-instructions">
-              Choose the word which best completes each sentence.
-            </p>
-          </header>
-
           <div
             className="progress-container"
             role="progressbar"
@@ -71,6 +62,11 @@ export default function AdvancedTestThree({ newScore }) {
               Question {cumulativeQuestionNumber} of 60
             </p>
           </div>
+          <header className="question-header">
+            <p className="test-instructions">
+              Choose the word which best completes each sentence.
+            </p>
+          </header>
 
           <div className="current-question-focus">
             <h3 className="question-focus-title">Question {questionNumber}:</h3>

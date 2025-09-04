@@ -44,15 +44,6 @@ export default function AdvancedTestTwo({ newScore }) {
         <AdvancedTestThree newScore={score} />
       ) : (
         <div className="test-content">
-          <header className="question-header">
-            <h2 className="language-test-question" id="question-title">
-              Advanced Level Assessment - Reading Comprehension
-            </h2>
-            <p className="test-instructions">
-              Choose the word which best fits each space in the text below.
-            </p>
-          </header>
-
           <div
             className="progress-container"
             role="progressbar"
@@ -71,6 +62,11 @@ export default function AdvancedTestTwo({ newScore }) {
               Question {cumulativeQuestionNumber} of 60
             </p>
           </div>
+          <header className="question-header">
+            <p className="test-instructions">
+              Choose the word which best fits each space in the text below.
+            </p>
+          </header>
 
           <div className="passage-container">
             <h3 className="passage-title">SCRABBLE</h3>

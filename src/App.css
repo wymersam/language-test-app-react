@@ -829,13 +829,6 @@ a:focus-visible {
   text-align: center;
 }
 
-.passage-text {
-  line-height: 1.6;
-  font-size: var(--font-size-base);
-  color: black;
-  text-align: justify;
-}
-
 /* Enhanced test images */
 .test-image-container {
   display: flex;
@@ -843,39 +836,7 @@ a:focus-visible {
   margin: var(--spacing-lg) 0;
 }
 
-/* Enhanced answer buttons */
-.answer-text {
-  display: block;
-  width: 100%;
-}
-
-.test-btn {
-  position: relative;
-  overflow: hidden;
-}
-
-.test-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-.test-btn:hover::before {
-  left: 100%;
-}
-
 /* Better focus indicators for test content */
-.test-instructions:focus,
 .passage-title:focus,
 .language-test-question:focus {
   outline: 2px solid var(--brand-aubergine);
@@ -916,15 +877,6 @@ a:focus-visible {
   100% {
     transform: translateX(100%);
   }
-}
-
-/* Advanced Test Component Styles - Mobile First */
-.test-instructions {
-  background: white;
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid var(--brand-aubergine);
 }
 
 .instructions-text {
