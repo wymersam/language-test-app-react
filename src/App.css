@@ -125,12 +125,6 @@ button {
   align-items: center;
 }
 
-button:hover {
-  background: var(--brand-aubergine);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--brand-aubergine-20);
-}
-
 .submit-btn {
   background-color: var(--brand-aubergine);
   color: #ffffff;
@@ -157,15 +151,6 @@ button:hover {
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-primary);
   color: black;
-}
-
-.answer-btn:hover,
-.answer-btn:focus {
-  border-color: var(--brand-aubergine);
-  background: var(--brand-aubergine);
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--brand-aubergine-20);
 }
 
 .answer-number {
@@ -259,12 +244,6 @@ button:hover {
   text-align: left;
   min-height: 60px;
   width: 100%;
-}
-
-.pretest-answer-btn:hover {
-  color: #ffffff;
-  background: var(--brand-aubergine);
-  transform: translateY(-1px);
 }
 
 .pretest-answer-btn.selected {
