@@ -130,7 +130,7 @@ export default function TestResults({
             </>
           )}
 
-          <div className="level-badge" style={{ borderColor: levelData.color }}>
+          <div className="level-badge">
             <div
               className="level-indicator"
               style={{ backgroundColor: levelData.color }}

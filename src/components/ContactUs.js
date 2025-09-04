@@ -219,9 +219,6 @@ export default function ContactUs({ level }) {
       ) : (
         <section className="success-section">
           <div className="success-container">
-            <div className="success-icon" aria-hidden="true">
-              ✅
-            </div>
             <h3 className="success-title">Thank You!</h3>
             <p className="success-message">
               Your assessment results have been submitted successfully.
@@ -239,9 +236,6 @@ export default function ContactUs({ level }) {
                   className="recommendations-link"
                   aria-label={`View ${level} level course recommendations (opens in new tab)`}
                 >
-                  <span className="link-icon" aria-hidden="true">
-                    🎓
-                  </span>
                   View {level} Course Recommendations
                   <span className="external-icon" aria-hidden="true">
                     ↗
