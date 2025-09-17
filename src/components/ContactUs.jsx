@@ -5,7 +5,6 @@ import React, {
   useMemo,
   useContext,
 } from "react";
-import emailjs from "@emailjs/browser";
 import { MyContext } from "../MyContext";
 
 export default function ContactUs({ level }) {
@@ -95,19 +94,30 @@ export default function ContactUs({ level }) {
       }));
 
       try {
-        await emailjs.sendForm(
-          "service_nzczfuh",
-          "template_utaehz6",
-          form.current,
-          "user_O0EicnClTqFEK6Kl07ODl"
-        );
+        const res = await fetch("/.netlify/functions/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            course,
+            media,
+            level,
+          }),
+        });
 
-        setFormState((prev) => ({
-          ...prev,
-          isSubmitting: false,
-          isSubmitted: true,
-        }));
-        setFormData({ name: "", email: "" });
+        const data = await res.json();
+
+        if (data.success) {
+          setFormState((prev) => ({
+            ...prev,
+            isSubmitting: false,
+            isSubmitted: true,
+          }));
+          setFormData({ name: "", email: "" });
+        } else {
+          throw new Error(data.error || "Unknown error");
+        }
       } catch (error) {
         console.error("Email sending failed:", error);
         setFormState((prev) => ({
@@ -118,7 +128,7 @@ export default function ContactUs({ level }) {
         }));
       }
     },
-    [validateForm]
+    [validateForm, formData, course, media, level]
   );
 
   const { isSubmitting, isSubmitted, hasError, errorMessage } = formState;
@@ -188,11 +198,6 @@ export default function ContactUs({ level }) {
                   aria-describedby={hasError ? "form-error" : undefined}
                 />
               </div>
-
-              {/* Hidden fields for EmailJS */}
-              <input type="hidden" name="courses" value={course || ""} />
-              <input type="hidden" name="media" value={media || ""} />
-              <input type="hidden" name="level" value={level || ""} />
 
               <button
                 type="submit"
