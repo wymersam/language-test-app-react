@@ -23,7 +23,7 @@ export default function ContactUs({ level }) {
 
   const courseRecommendation = useMemo(() => {
     const baseUrl =
-      "https://www.carl-schurz-haus.de/nc/sprachkurse/erwachsene.html";
+      "https://csh-fr.de/test/kw/bereich/kategorien/kategorie-id/";
     const levelMap = {
       A1: 71,
       A2: 65,
@@ -34,8 +34,10 @@ export default function ContactUs({ level }) {
     };
 
     const katid = levelMap[level];
-    return katid
-      ? `${baseUrl}?kathaupt=1&katid=${katid}&katvaterid=64&katname=${level}`
+    return level === "A1"
+      ? "https://csh-fr.de/englisch-lernen/erwachsene/#einzelerwachsene"
+      : katid
+      ? `${baseUrl}${katid}/oberkategorie-id/64/kategorie-name/${level}/#inhalt`
       : null;
   }, [level]);
 
