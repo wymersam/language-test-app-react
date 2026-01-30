@@ -1,70 +1,148 @@
-# Getting Started with Create React App
+# Carl-Schurz Haus English Language Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive English language assessment application designed for the Carl-Schurz Haus language school. This interactive test helps students determine their English proficiency level and provides personalized course recommendations.
 
-## Available Scripts
+## 🌐 Live Demo
 
-In the project directory, you can run:
+**[Take the Test Now](https://language-test-app.netlify.app)**
 
-### `npm start`
+## ✨ Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Comprehensive Assessment**: Multi-level English language evaluation
+- **Progressive Testing**: Basic tests (A1-B2) and Advanced tests (C1-C2)
+- **Real-time Scoring**: Instant feedback and progress tracking
+- **Personalized Results**: Custom recommendations based on performance
+- **Contact Integration**: Direct course inquiry form with test results
+- **Performance Optimized**: Lazy loading, code splitting, and optimized fonts
+- **Accessibility Compliant**: ARIA labels and screen reader support
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🎯 Test Structure
 
-### `npm test`
+### Pretest Questions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Initial assessment to understand student background and learning preferences
 
-### `npm run build`
+### Basic Tests (Questions 1-40)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **LanguageTestOne**: Foundation vocabulary and grammar
+- **LanguageTestTwo-Six**: Progressive difficulty covering A1-B2 levels
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Advanced Tests (Questions 41-60)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **AdvancedTestOne-Three**: Advanced English for B2+ and C-level students
 
-### `npm run eject`
+### Results & Recommendations
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Detailed score breakdown
+- CEFR level classification (A1-C2)
+- Personalized course recommendations
+- Direct contact form for enrollment
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🚀 Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Prerequisites
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Node.js (v16 or higher)
+- npm or yarn
 
-## Learn More
+### Installation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+# Clone the repository
+git clone https://github.com/wymersam/language-test-app-react.git
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Navigate to project directory
+cd language-test-app-react
 
-### Code Splitting
+# Install dependencies
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Start development server
+npm start
+```
 
-### Analyzing the Bundle Size
+### Available Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **`npm start`** - Runs the app in development mode on [http://localhost:3000](http://localhost:3000)
+- **`npm test`** - Launches the test runner with comprehensive score validation
+- **`npm run build`** - Creates optimized production build
+- **`npm run preview`** - Preview the production build locally
 
-### Making a Progressive Web App
+## 🏗️ Technical Architecture
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Built With
 
-### Advanced Configuration
+- **React 19.2.4** - Modern React with hooks and concurrent features
+- **Vite 7.3.1** - Fast build tool with HMR and optimization
+- **Vitest 2.1.0** - Lightning-fast testing framework
+- **JavaScript ES2022** - Modern JavaScript features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Key Components
 
-### Deployment
+```shell
+src/
+├── components/
+│   ├── PretestQuestions.jsx     # Initial assessment
+│   ├── LanguageTests/
+│   │   ├── BasicTests/         # A1-B2 level tests
+│   │   └── AdvancedTests/      # B2+ and C-level tests
+│   ├── ResultsPages/           # Score calculation and display
+│   └── ContactUs.jsx           # Course inquiry form
+├── questions/                  # Test question data
+└── utils/                     # Helper functions
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🧪 Testing
 
-### `npm run build` fails to minify
+Comprehensive test suite includes:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Component rendering validation
+- Score calculation accuracy
+- User interaction flows
+- Accessibility compliance
+- Performance metrics
+
+Run tests with detailed coverage:
+
+```bash
+npm test
+```
+
+## 🎨 Styling & Design
+
+- **Custom CSS**: Responsive design with CSS variables
+- **Typography**: Google Fonts (Rubik) with system fallbacks
+- **Color Scheme**: Carl-Schurz Haus brand colors (Aubergine primary)
+- **Accessibility**: High contrast ratios and screen reader support
+
+## 📱 Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## 🚀 Deployment
+
+Deployed on Netlify with automatic builds from the master branch:
+
+- **Production URL**: [https://language-test-app.netlify.app](https://language-test-app.netlify.app)
+- **Build Command**: `npm run build`
+- **Output Directory**: `build/`
+
+## 👤 Author
+
+**Sammy-Jo Wymer**
+
+- Developer & Designer
+- Created for Carl-Schurz Haus, Freiburg
+
+## 📄 License
+
+This project is developed specifically for Carl-Schurz Haus educational purposes.
+
+---
+
+_Take your English language assessment and discover your perfect course match!_
