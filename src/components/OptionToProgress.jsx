@@ -1,13 +1,24 @@
-import React, { useState, useCallback, useMemo } from "react";
-import AdvancedTestOne from "./LanguageTests/AdvancedTests/AdvancedTestOne";
-import TestResults from "./ResultsPages/TestResults";
-// import TestResultsAdvanced from "./ResultsPages/TestResultsAdvanced";
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  lazy,
+  Suspense,
+} from "react";
+
+const AdvancedTestOne = lazy(
+  () => import("./LanguageTests/AdvancedTests/AdvancedTestOne"),
+);
+const TestResults = lazy(() => import("./ResultsPages/TestResults"));
 
 export default function OptionToProgress({ scoreSix }) {
   const currentScore = scoreSix;
 
-  // Store score in localStorage for persistence
-  localStorage.setItem("testScore", currentScore);
+  // Store score in localStorage for persistence (only when score changes)
+  useEffect(() => {
+    localStorage.setItem("testScore", currentScore);
+  }, [currentScore]);
 
   const [next, setNext] = useState(false);
   const [finish, setFinish] = useState(false);
@@ -94,13 +105,25 @@ export default function OptionToProgress({ scoreSix }) {
           </div>
         </div>
       ) : next ? (
-        <AdvancedTestOne scoreSix={currentScore} />
+        <Suspense
+          fallback={
+            <div className="loading-spinner">Loading advanced test...</div>
+          }
+        >
+          <AdvancedTestOne scoreSix={currentScore} />
+        </Suspense>
       ) : (
-        <TestResults
-          score={{ scoreSix: currentScore }}
-          scorePropertyName="scoreSix"
-          showScoreCard={true}
-        />
+        <Suspense
+          fallback={
+            <div className="loading-spinner">Loading your results...</div>
+          }
+        >
+          <TestResults
+            score={{ scoreSix: currentScore }}
+            scorePropertyName="scoreSix"
+            showScoreCard={true}
+          />
+        </Suspense>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, memo } from "react";
 import ContactUs from "../ContactUs";
 
-export default function TestResults({
+function TestResults({
   score,
   scorePropertyName = "scoreSix",
   showScoreCard = false,
@@ -149,3 +149,5 @@ export default function TestResults({
     </div>
   );
 }
+
+export default memo(TestResults);

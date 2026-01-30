@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useMemo } from "react";
-import LanguageTestTwo from "./LanguageTestTwo";
+import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
 import { languageTestQuestionsOne } from "../../../questions/language-test-questions-one";
+
+const LanguageTestTwo = lazy(() => import("./LanguageTestTwo"));
 
 export default function LanguageTestOne() {
   const [indexLanguageTest, setIndexLanguageTest] = useState(0);
@@ -42,12 +43,16 @@ export default function LanguageTestOne() {
         nextQuestionTest();
       }
     },
-    [nextQuestionTest]
+    [nextQuestionTest],
   );
   return (
     <div className="language-test-container">
       {testComplete ? (
-        <LanguageTestTwo scoreOne={score} />
+        <Suspense
+          fallback={<div className="loading-spinner">Loading test...</div>}
+        >
+          <LanguageTestTwo scoreOne={score} />
+        </Suspense>
       ) : (
         <div className="test-content">
           <header className="question-header">
@@ -63,11 +68,12 @@ export default function LanguageTestOne() {
             aria-valuenow={progress}
             aria-valuemin="0"
             aria-valuemax="100"
+            aria-label={`Language test progress: ${progress}% complete, question ${cumulativeQuestionNumber} of 40`}
           >
             <div
               className="progress-bar"
               style={{ width: `${progress}%` }}
-              aria-label={`${progress}% complete`}
+              aria-hidden="true"
             />
           </div>
           <div className="progress-info">

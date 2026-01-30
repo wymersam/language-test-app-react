@@ -38,7 +38,7 @@ export default function AdvancedTestOne() {
       }
       nextQuestionTest();
     },
-    [nextQuestionTest]
+    [nextQuestionTest],
   );
 
   return (
@@ -53,11 +53,12 @@ export default function AdvancedTestOne() {
             aria-valuenow={progress}
             aria-valuemin="0"
             aria-valuemax="100"
+            aria-label={`Advanced test progress: ${progress}% complete, question ${cumulativeQuestionNumber} of 60`}
           >
             <div
               className="progress-bar"
               style={{ width: `${progress}%` }}
-              aria-label={`${progress}% complete`}
+              aria-hidden="true"
             />
           </div>
           <div className="progress-info">

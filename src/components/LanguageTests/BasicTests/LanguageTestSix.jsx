@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
 import { questionsSix } from "../../../questions/language-test-questions-six";
-import TestResults from "../../ResultsPages/TestResults";
 import OptionToProgress from "../../OptionToProgress";
+
+const TestResults = lazy(() => import("../../ResultsPages/TestResults"));
 
 export default function LanguageTestSix(scoreFive) {
   const currentScore = scoreFive;
@@ -43,17 +44,21 @@ export default function LanguageTestSix(scoreFive) {
         nextQuestionTest();
       }
     },
-    [nextQuestionTest]
+    [nextQuestionTest],
   );
 
   return (
     <div className="">
       {testComplete && score < 35 ? (
-        <TestResults
-          score={{ scoreSix: score }}
-          scorePropertyName="scoreSix"
-          showScoreCard={true}
-        />
+        <Suspense
+          fallback={<div className="loading-spinner">Loading results...</div>}
+        >
+          <TestResults
+            score={{ scoreSix: score }}
+            scorePropertyName="scoreSix"
+            showScoreCard={true}
+          />
+        </Suspense>
       ) : testComplete && score >= 35 ? (
         <OptionToProgress scoreSix={score} />
       ) : (
@@ -70,11 +75,12 @@ export default function LanguageTestSix(scoreFive) {
             aria-valuenow={progress}
             aria-valuemin="0"
             aria-valuemax="100"
+            aria-label={`Test progress: ${progress}% complete, question ${cumulativeQuestionNumber} of 40`}
           >
             <div
               className="progress-bar"
               style={{ width: `${progress}%` }}
-              aria-label={`${progress}% complete`}
+              aria-hidden="true"
             />
           </div>
           <div className="progress-info">

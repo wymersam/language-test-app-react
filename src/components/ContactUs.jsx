@@ -37,8 +37,8 @@ export default function ContactUs({ level }) {
     return level === "A1"
       ? "https://csh-fr.de/englisch-lernen/erwachsene/#einzelerwachsene"
       : katid
-      ? `${baseUrl}${katid}/oberkategorie-id/64/kategorie-name/${level}/#inhalt`
-      : null;
+        ? `${baseUrl}${katid}/oberkategorie-id/64/kategorie-name/${level}/#inhalt`
+        : null;
   }, [level]);
 
   const handleInputChange = useCallback(
@@ -56,7 +56,7 @@ export default function ContactUs({ level }) {
         }));
       }
     },
-    [formState.hasError]
+    [formState.hasError],
   );
 
   const validateForm = useCallback(() => {
@@ -130,7 +130,7 @@ export default function ContactUs({ level }) {
         }));
       }
     },
-    [validateForm, formData, course, media, level]
+    [validateForm, formData, course, media, level],
   );
 
   const { isSubmitting, isSubmitted, hasError, errorMessage } = formState;
@@ -209,7 +209,7 @@ export default function ContactUs({ level }) {
                 {isSubmitting ? (
                   <>
                     <span className="loading-spinner" aria-hidden="true"></span>
-                    Submitting...
+                    Submitting results...
                   </>
                 ) : (
                   <>

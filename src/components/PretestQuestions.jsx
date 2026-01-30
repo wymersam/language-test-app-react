@@ -1,7 +1,10 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
 import { MyContext } from "../MyContext";
 import { pretestQuestions } from "../questions/pretest-questions";
-import LanguageTestOne from "./LanguageTests/BasicTests/LanguageTestOne";
+
+const LanguageTestOne = lazy(
+  () => import("./LanguageTests/BasicTests/LanguageTestOne"),
+);
 
 export default function PretestQuestions() {
   const [index, setIndex] = useState(0);
@@ -68,7 +71,12 @@ export default function PretestQuestions() {
         return newSelected;
       });
     },
-    [currentQuestion.id, isMultipleChoice, handleCourseMedia, handleAnswerClass]
+    [
+      currentQuestion.id,
+      isMultipleChoice,
+      handleCourseMedia,
+      handleAnswerClass,
+    ],
   );
 
   const nextQuestion = useCallback(() => {
@@ -86,11 +94,24 @@ export default function PretestQuestions() {
     return selectedOptions.size > 0;
   }, [selectedOptions]);
 
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({
+      course: classOptions,
+      media: courseMedia,
+    }),
+    [classOptions, courseMedia],
+  );
+
   return (
-    <MyContext.Provider value={{ course: classOptions, media: courseMedia }}>
+    <MyContext.Provider value={contextValue}>
       <div className="pretest-container">
         {formComplete ? (
-          <LanguageTestOne />
+          <Suspense
+            fallback={<div className="loading-spinner">Loading test...</div>}
+          >
+            <LanguageTestOne />
+          </Suspense>
         ) : (
           <div className="pretest-content">
             {/* Progress Bar */}
@@ -100,11 +121,12 @@ export default function PretestQuestions() {
               aria-valuenow={progress}
               aria-valuemin="0"
               aria-valuemax="100"
+              aria-label={`Pre-test progress: ${progress}% complete, question ${currentQuestionNumber} of ${pretestQuestions.length}`}
             >
               <div
                 className="progress-bar"
                 style={{ width: `${progress}%` }}
-                aria-label={`${progress}% complete`}
+                aria-hidden="true"
               />
             </div>
             <div className="progress-info">
@@ -128,7 +150,7 @@ export default function PretestQuestions() {
               <div className="answer-grid">
                 {answerOptions.map((answerOption, optionIndex) => {
                   const isSelected = selectedOptions.has(
-                    answerOption.answerClass
+                    answerOption.answerClass,
                   );
                   return (
                     <button
@@ -139,7 +161,7 @@ export default function PretestQuestions() {
                       onClick={() =>
                         handleAnswerClick(
                           answerOption.answerClass,
-                          answerOption.answerText
+                          answerOption.answerText,
                         )
                       }
                       type="button"

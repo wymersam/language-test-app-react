@@ -1,9 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#660066ff" />
+
+    <!-- Performance optimizations -->
+    <!-- Preconnect to font origins ASAP to start DNS/TCP/TLS early -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload critical font file to bypass the CSS chain -->
+    <link
+      rel="preload"
+      href="https://fonts.gstatic.com/s/rubik/v31/iJWKBXyIfDnIVYPNwGw5.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Preload critical image -->
+    <link
+      rel="preload"
+      href="/images/csh_sw.avif"
+      as="image"
+      type="image/avif"
+    />
+
     <meta
       name="description"
       content="Take your German language assessment at the Carl-Schurz Haus. Developed by Sammy-Jo Wymer. Find your level and get personalized course recommendations."
@@ -25,7 +48,7 @@
       property="og:url"
       content="https://www.carl-schurz-haus.de/home.html"
     />
-    <meta property="og:image" content="/images/csh_sw.jpg" />
+    <meta property="og:image" content="/images/csh_sw.avif" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -37,15 +60,67 @@
       name="twitter:description"
       content="Take your German language assessment at the Carl-Schurz Haus. Developed by Sammy-Jo Wymer."
     />
-    <meta name="twitter:image" content="/images/csh_sw.jpg" />
+    <meta name="twitter:image" content="/images/csh_sw.avif" />
 
-    <!-- Google Fonts - Rubik -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Optimized Google Fonts with font-display swap -->
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media = 'all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- Critical CSS for immediate rendering -->
+    <style>
+      :root {
+        --brand-aubergine: rgb(102, 0, 102);
+        --font-family-primary: "Rubik", sans-serif;
+        --spacing-lg: 0.625em;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family-primary), sans-serif;
+      }
+      main {
+        width: 100%;
+        max-width: 800px;
+        padding: 1rem;
+      }
+      .csh-logo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: var(--spacing-lg);
+      }
+      .csh-logo {
+        max-width: 200px;
+        height: auto;
+      }
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+    </style>
 
     <title>Carl-Schurz Haus German Language Test | Sammy-Jo Wymer</title>
   </head>
