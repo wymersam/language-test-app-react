@@ -1,5 +1,4 @@
 import "./App.css";
-import { Suspense } from "react";
 import PretestQuestions from "./components/PretestQuestions";
 
 function App() {

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { advancedQuestions } from "../../../questions/advanced-questions-one";
 import AdvancedTestTwo from "./AdvancedTestTwo";
 

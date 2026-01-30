@@ -1,10 +1,7 @@
-import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { MyContext } from "../MyContext";
 import { pretestQuestions } from "../questions/pretest-questions";
-
-const LanguageTestOne = lazy(
-  () => import("./LanguageTests/BasicTests/LanguageTestOne"),
-);
+import LanguageTestOne from "./LanguageTests/BasicTests/LanguageTestOne";
 
 export default function PretestQuestions() {
   const [index, setIndex] = useState(0);
@@ -107,11 +104,7 @@ export default function PretestQuestions() {
     <MyContext.Provider value={contextValue}>
       <div className="pretest-container">
         {formComplete ? (
-          <Suspense
-            fallback={<div className="loading-spinner">Loading test...</div>}
-          >
-            <LanguageTestOne />
-          </Suspense>
+          <LanguageTestOne />
         ) : (
           <div className="pretest-content">
             {/* Progress Bar */}

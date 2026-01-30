@@ -1,16 +1,7 @@
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-  lazy,
-  Suspense,
-} from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 
-const AdvancedTestOne = lazy(
-  () => import("./LanguageTests/AdvancedTests/AdvancedTestOne"),
-);
-const TestResults = lazy(() => import("./ResultsPages/TestResults"));
+import AdvancedTestOne from "../components/LanguageTests/AdvancedTests/AdvancedTestOne";
+import TestResults from "../components/ResultsPages/TestResults";
 
 export default function OptionToProgress({ scoreSix }) {
   const currentScore = scoreSix;
@@ -105,25 +96,13 @@ export default function OptionToProgress({ scoreSix }) {
           </div>
         </div>
       ) : next ? (
-        <Suspense
-          fallback={
-            <div className="loading-spinner">Loading advanced test...</div>
-          }
-        >
-          <AdvancedTestOne scoreSix={currentScore} />
-        </Suspense>
+        <AdvancedTestOne scoreSix={currentScore} />
       ) : (
-        <Suspense
-          fallback={
-            <div className="loading-spinner">Loading your results...</div>
-          }
-        >
-          <TestResults
-            score={{ scoreSix: currentScore }}
-            scorePropertyName="scoreSix"
-            showScoreCard={true}
-          />
-        </Suspense>
+        <TestResults
+          score={{ scoreSix: currentScore }}
+          scorePropertyName="scoreSix"
+          showScoreCard={true}
+        />
       )}
     </div>
   );

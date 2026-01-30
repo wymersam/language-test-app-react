@@ -1,8 +1,7 @@
-import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { questionsSix } from "../../../questions/language-test-questions-six";
 import OptionToProgress from "../../OptionToProgress";
-
-const TestResults = lazy(() => import("../../ResultsPages/TestResults"));
+import TestResults from "../../ResultsPages/TestResults";
 
 export default function LanguageTestSix(scoreFive) {
   const currentScore = scoreFive;
@@ -50,15 +49,11 @@ export default function LanguageTestSix(scoreFive) {
   return (
     <div className="">
       {testComplete && score < 35 ? (
-        <Suspense
-          fallback={<div className="loading-spinner">Loading results...</div>}
-        >
-          <TestResults
-            score={{ scoreSix: score }}
-            scorePropertyName="scoreSix"
-            showScoreCard={true}
-          />
-        </Suspense>
+        <TestResults
+          score={{ scoreSix: score }}
+          scorePropertyName="scoreSix"
+          showScoreCard={true}
+        />
       ) : testComplete && score >= 35 ? (
         <OptionToProgress scoreSix={score} />
       ) : (

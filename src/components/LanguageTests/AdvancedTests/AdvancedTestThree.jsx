@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { advancedQuestionsThree } from "../../../questions/advanced-questions-three";
-
-const TestResults = lazy(() => import("../../ResultsPages/TestResults"));
+import TestResults from "../../ResultsPages/TestResults";
 
 export default function AdvancedTestThree({ newScore }) {
   const [indexLanguageTest, setIndexLanguageTest] = useState(0);
@@ -42,11 +41,7 @@ export default function AdvancedTestThree({ newScore }) {
   return (
     <div>
       {testComplete ? (
-        <Suspense
-          fallback={<div className="loading-spinner">Loading results...</div>}
-        >
-          <TestResults finalScore={score} isAdvanced={true} />
-        </Suspense>
+        <TestResults finalScore={score} isAdvanced={true} />
       ) : (
         <div className="test-content">
           <div

@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useCallback,
-  useMemo,
-  useContext,
-} from "react";
+import { useRef, useState, useCallback, useMemo, useContext } from "react";
 import { MyContext } from "../MyContext";
 
 export default function ContactUs({ level }) {

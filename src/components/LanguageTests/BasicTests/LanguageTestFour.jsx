@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { questionsFour } from "../../../questions/language-test-questions-four";
 import LanguageTestFive from "./LanguageTestFive";
 
@@ -42,7 +42,7 @@ export default function LanguageTestFour(scoreThree) {
         nextQuestionTest();
       }
     },
-    [nextQuestionTest]
+    [nextQuestionTest],
   );
 
   return (

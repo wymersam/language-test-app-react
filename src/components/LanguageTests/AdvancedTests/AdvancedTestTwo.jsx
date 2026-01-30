@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { advancedQuestionsTwo } from "../../../questions/advanced-questions-two";
 import AdvancedTestThree from "./AdvancedTestThree";
 
@@ -35,7 +35,7 @@ export default function AdvancedTestTwo({ newScore }) {
       }
       nextQuestionTest();
     },
-    [nextQuestionTest]
+    [nextQuestionTest],
   );
 
   return (

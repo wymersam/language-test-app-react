@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { languageTestQuestionsOne } from "../../../questions/language-test-questions-one";
-
-const LanguageTestTwo = lazy(() => import("./LanguageTestTwo"));
+import LanguageTestTwo from "./LanguageTestTwo";
 
 export default function LanguageTestOne() {
   const [indexLanguageTest, setIndexLanguageTest] = useState(0);
@@ -48,11 +47,7 @@ export default function LanguageTestOne() {
   return (
     <div className="language-test-container">
       {testComplete ? (
-        <Suspense
-          fallback={<div className="loading-spinner">Loading test...</div>}
-        >
-          <LanguageTestTwo scoreOne={score} />
-        </Suspense>
+        <LanguageTestTwo scoreOne={score} />
       ) : (
         <div className="test-content">
           <header className="question-header">
